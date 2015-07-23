@@ -1,39 +1,46 @@
 # SimpleFlash
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/simple_flash`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+I18n for flashes in Rails.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'simple_flash'
-```
+    gem "simple_flash", "~> 1.0"
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install simple_flash
-
 ## Usage
 
-TODO: Write usage instructions here
+SimpleFlash adds two helper methods to your controller: `redirect_to_with_success` and `redirect_to_with_fail`.
 
-## Development
+`redirect_to_with_*` helpers will automatically find the most suitable message in your localization and sets it as `:notice` or `:alert`. If there is no message defined for the given action, it will cascade up to the root level.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+en.yml:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    en:
+      success: Done! Your changes have been saved.
+      fail: Fail! Your changes hasn't been saved.
+      posts:
+        update: Post has been updated.
+
+Controller:
+
+    def update
+      ...
+      if @post.save
+        redirect_to_with_success posts_url #=> will render specific message for this action: "Post has been updated."
+      else
+        redirect_to_with_fail posts_url #=> will render generic message: "Fail! Your changes hasn't been saved."
+      end
+    end
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/simple_flash/fork )
+1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+5. Create new Pull Request
