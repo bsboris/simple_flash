@@ -1,5 +1,7 @@
 # SimpleFlash
 
+[![Code Climate](https://codeclimate.com/github/bsboris/simple_flash/badges/gpa.svg)](https://codeclimate.com/github/bsboris/simple_flash)
+
 I18n for flashes in Rails.
 
 ## Installation
